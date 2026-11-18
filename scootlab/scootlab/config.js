@@ -9,6 +9,5 @@ window.APP_CONFIG = {
   OWNER_NAME: "alejandro",
   CONTACT_EMAIL: "75alejandrovc@gmail.com",
   // Cuando AdSense te dé tu ID. Ej: "ca-pub-1234567890123456". Déjalo vacío hasta entonces.
-  ADSENSE_CLIENT: "
-pub-8277124006528812"
+  ADSENSE_CLIENT: "pub-8277124006528812"
 };
