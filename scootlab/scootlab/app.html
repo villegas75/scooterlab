@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ScootLab · Trucos de patinete</title>
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<style>
+:root{--bg:#000;--card:#000;--tx:#fff;--mut:#a8a8a8;--ac:#fff;--ac2:#fff;--bd:#3a3a3a;--chip:#1a1a1a;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.w{max-width:720px;margin:0 auto;padding:16px 16px 100px}
+h1{font-size:28px;margin:8px 0 2px;letter-spacing:-.5px}
+h1 b{color:var(--ac)}
+.sub{color:var(--mut);margin:0 0 14px}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--bg);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.tab{flex:1;padding:6px 2px;border:0;background:transparent;color:var(--mut);border-radius:12px;font-weight:600}
+.tab span{display:block;font-size:20px}
+.tab.on{background:#fff;color:#000;border-color:#fff}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px}
+.chip{white-space:nowrap;padding:6px 12px;border-radius:99px;border:0;background:var(--chip);color:var(--tx);font-size:14px}
+.chip.on{background:var(--tx);color:var(--bg)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.t{font-weight:700;font-size:18px;margin:0}
+.lvl{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;color:#000}
+.l1{background:#fff}.l2{background:#c4c4c4}.l3{background:#888}
+.d{color:var(--mut);margin:4px 0 0;font-size:15px}
+.det{display:none;margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+.card.open .det{display:block}
+ol{padding-left:20px;margin:6px 0}
+li{margin-bottom:6px}
+.tip{background:var(--chip);border-radius:10px;padding:8px 10px;font-size:14px;margin-top:8px}
+button.pri{background:#fff;color:#000;border:0;border-radius:12px;padding:11px 16px;font-weight:700;font-size:15px}
+button.sec{background:var(--chip);color:var(--tx);border:0;border-radius:10px;padding:8px 12px;font-size:14px}
+input,select{width:100%;padding:11px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:16px;margin-bottom:8px}
+video{width:100%;border-radius:12px;background:#000;max-height:60vh}
+.m{color:var(--mut);font-size:13px}.m a{color:inherit}
+.tab{font-size:11px!important;line-height:1.3}
+.rl{height:calc(100dvh - 250px);min-height:300px;overflow-y:auto;scroll-snap-type:y mandatory;border-radius:16px}
+.rv{height:100%;scroll-snap-align:start;position:relative;background:#000;border:1px solid var(--bd);border-radius:16px;overflow:hidden}
+.rv video{width:100%;height:100%;object-fit:cover;max-height:none;border-radius:0}
+.ro{position:absolute;left:0;right:0;bottom:0;padding:14px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff}
+.vw{position:relative}
+.xl{position:fixed!important;inset:0!important;z-index:100;width:100vw!important;height:100dvh!important;max-height:none!important;border-radius:0!important;margin:0!important;border:0!important;background:#000;aspect-ratio:auto!important}
+.xl video{width:100%;height:100%;max-height:none!important;object-fit:contain;border-radius:0}
+.xl .fsb{top:calc(10px + env(safe-area-inset-top,0px))}
+.fsb{position:absolute;top:10px;right:10px;z-index:2;background:rgba(0,0,0,.55);color:#fff;border:0;border-radius:10px;padding:6px 10px;font-size:16px}
+.an:fullscreen{aspect-ratio:auto;width:100vw;height:100vh;border:0;border-radius:0}
+.an:-webkit-full-screen{aspect-ratio:auto;width:100vw;height:100vh;border:0;border-radius:0}
+.rv:fullscreen video{object-fit:contain}
+.av{overflow:hidden;width:44px;height:44px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;font-weight:800;flex:none}
+.sh{font-size:17px;margin:18px 0 8px;display:flex;justify-content:space-between}.sh span{color:var(--mut);font-size:14px;font-weight:400}
+.an{overflow:hidden;display:block;width:100%;aspect-ratio:2/1;background:#0d0d0d;border:1px solid var(--bd);border-radius:12px}
+.msg{padding:10px;border-radius:10px;background:var(--chip);font-size:14px;margin-bottom:10px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1><a href="/" style="color:inherit;text-decoration:none">Scoot<b>Lab</b></a></h1>
+  <p class="sub">Aprende trucos de patinete paso a paso y comparte tus clips.</p>
+  <div class="tabs">
+    <button class="tab on" id="t1"><span>📚</span>Tutoriales</button>
+    <button class="tab" id="t4"><span>🎬</span>Reels</button>
+    <button class="tab" id="t2"><span>👥</span>Comunidad</button>
+    <button class="tab" id="t3"><span>👤</span>Perfil</button>
+  </div>
+
+  <section id="v1">
+    <input id="srch" placeholder="Buscar truco…">
+    <div class="chips" id="chips"></div>
+    <div id="list"></div>
+  </section>
+
+  <section id="v2" class="hide">
+    <div class="card" id="up">
+      <p class="t">Sube tu clip</p>
+      <p class="m" style="margin:2px 0 10px">Máx. 20 MB. Vídeo corto, mejor en horizontal.</p>
+      <select id="sel"></select>
+      <input id="ttl" placeholder="Título o comentario (opcional)" maxlength="80">
+      <input id="file" type="file" accept="video/*">
+      <button class="pri" id="btn">Subir vídeo</button>
+      <div class="m" id="st" style="margin-top:8px"></div>
+    </div>
+    <div class="msg hide" id="noup">Subir vídeos no está disponible para tu cuenta en esta página, pero puedes ver los clips de otros.</div>
+    <div class="chips" id="fchips"></div>
+    <div id="clips"></div>
+  </section>
+
+  <section id="v3" class="hide">
+    <input id="psr" placeholder="🔍 Buscar personas por apodo…" maxlength="24">
+    <div id="psres"></div>
+    <div class="card" id="pf"></div>
+    <div id="mine" style="margin-top:12px"></div>
+  </section>
+
+  <section id="v4" class="hide"><div id="reels"></div></section>
+<p class="m" style="text-align:center;margin-top:24px"><a href="/tutoriales">Tutoriales</a> · <a href="/privacidad">Privacidad</a> · <a href="/terminos">Términos</a> · <a href="/contacto">Contacto</a></p>
+</div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="supabase-shim.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const T=[
+["bunny","Bunny hop","Básicos",1,"Salta con el patinete pegado a los pies.",["Pies sobre la tabla, agáchate y carga el peso atrás.","Salta y tira de la barra hacia ti.","Estira las piernas en el aire y aterriza flexionando."],"Practica saltando una línea en el suelo.","bunny"],
+["curb","Salto de bordillo","Básicos",1,"Sube un bordillo sin bajarte.",["Acércate recto y a velocidad suave.","Haz un bunny hop justo antes del bordillo.","Aterriza con las dos ruedas a la vez."],"Empieza con bordillos bajos.","bunny"],
+["hopover","Salto sobre obstáculo","Básicos",2,"Salta un objeto sin tocarlo.",["Coge velocidad moderada y mira el obstáculo.","Despega con bunny hop a un metro de distancia.","Recoge las piernas y aterriza lejos."],"Usa primero un objeto blando.","bunny"],
+["manual","Manual","Equilibrio y suelo",1,"Rueda solo con la rueda trasera.",["Rueda suave con rodillas flexionadas.","Echa el peso atrás y tira de la barra.","Busca el punto de equilibrio con el pie trasero."],"Deja el pie junto al freno por seguridad.","manual"],
+["manual-largo","Manual largo","Equilibrio y suelo",2,"Mantén el manual varios segundos.",["Sube a manual con poca velocidad.","Controla el equilibrio con brazo y freno.","Baja despacio adelantando el peso."],"Mide metros: cada intento, un poco más.","manual"],
+["nose","Nose manual","Equilibrio y suelo",2,"Rueda solo con la rueda delantera.",["Rueda suave con el peso adelantado.","Empuja la barra hacia abajo y adelante.","Mantén el equilibrio con la cadera atrás."],"Practica con rampa suave primero.","nose"],
+["fakie","Fakie","Equilibrio y suelo",1,"Rueda hacia atrás con control.",["Para casi en una pendiente suave.","Mira por encima del hombro.","Deja rodar sin frenar y dirige con la barra."],"Busca una zona sin gente.","fakie"],
+["fakie-manual","Fakie manual","Equilibrio y suelo",3,"Manual yendo hacia atrás.",["Rueda en fakie estable.","Levanta la rueda delantera tirando de la barra.","Mantén el equilibrio mirando atrás."],"Domina antes manual y fakie por separado.","fakie"],
+["decade","Decade","Giros",3,"El cuerpo gira alrededor del patinete agarrado a la barra.",["Haz un bunny hop alto y sujeta bien la barra.","Suelta los pies de la tabla y gira el cuerpo alrededor de la barra.","Vuelve a colocar los pies y aterriza."],"Practica el giro del cuerpo sin saltar, apoyado en la barra.","decade"],
+["180","180","Giros",2,"Gira media vuelta en el aire.",["Bunny hop estable.","Gira hombros y cadera hacia un lado.","Aterriza fakie con rodillas flexionadas."],"Mira hacia donde vas a aterrizar.","yaw180"],
+["360","360","Giros",3,"Gira una vuelta completa.",["Bunny hop alto.","Gira cabeza y hombros primero, el cuerpo sigue.","Aterriza recto y absorbe con las piernas."],"Practica 180 limpios antes.","yaw360"],
+["540","540","Giros",3,"Vuelta y media en el aire.",["Salto máximo, hombros cargados.","Gira con fuerza y mantén el patinete pegado.","Busca el suelo y aterriza fakie."],"Casco y protecciones siempre.","yaw540"],
+["720","720","Giros",3,"Dos vueltas completas.",["Salto muy alto con carga de hombros.","Gira rápido y recoge el patinete.","Abre el cuerpo para frenar el giro."],"Solo con 360 y 540 dominados.","yaw720"],
+["barspin","Barspin","Aéreos con la barra",2,"Gira la barra 360° en el aire.",["Bunny hop alto.","Suelta una mano y empuja la barra con la otra.","Recupera el agarre antes de aterrizar."],"Prueba primero sobre hierba.","barspin"],
+["dbar","Doble barspin","Aéreos con la barra",3,"Dos giros de barra seguidos.",["Salto alto y con tiempo.","Empuja la barra con fuerza y suéltala.","Agarra de nuevo antes de caer."],"Necesitas un barspin muy limpio.","dbar"],
+["x-up","X-up","Aéreos con la barra",2,"Cruza los brazos en el aire.",["Bunny hop alto.","En lo alto, gira la barra y cruza los brazos.","Deshaz el cruce antes de bajar."],"Mira siempre al suelo de aterrizaje.","x-up"],
+["turndown","Turndown","Aéreos con la barra",2,"Patea la tabla hacia un lado y gira la barra sin cruzar las manos.",["Haz un bunny hop con altura.","Saca la tabla hacia un lado y gira la barra hacia abajo.","Devuelve tabla y barra a su sitio antes de aterrizar."],"Empieza con un ángulo pequeño.","turndown"],
+["nohand","No-hander","Aéreos con la barra",3,"Suelta las dos manos en el aire.",["Salta alto y estable.","Suelta ambas manos manteniendo la barra con las rodillas.","Vuelve a agarrar antes de caer."],"Primero suelta solo una mano.","nohand"],
+["tuck","Tuck no-hander","Aéreos con la barra",3,"Aprieta la barra entre las rodillas y abre los brazos.",["Salta lo más alto posible.","Lleva las rodillas hacia delante y aprieta la barra entre ellas.","Abre los brazos, vuelve a agarrar y aterriza."],"Suelta una sola mano al empezar.","tuck"],
+["superman","Superman","Aéreos con la barra",3,"Estira las piernas atrás y lleva el patinete delante con las dos manos.",["Salto alto desde rampa o suelo.","Extiende las piernas hacia atrás y empuja el patinete hacia delante.","Recoge las piernas y aterriza flexionando."],"Mejor en rampa con aterrizaje suave.","super"],
+["cliffhanger","Cliffhanger","Aéreos con la barra",3,"Salto en el que el patinete queda colgando sobre tus pies.",["Salta alto con bunny hop.","Sube el patinete agarrado a la barra.","Deja que cuelgue sobre los pies y vuelve a la tabla para aterrizar."],"Practica primero en foso o colchoneta.","nofoot"],
+["tailwhip","Tailwhip","Aéreos con la tabla",3,"La tabla gira 360° alrededor de la barra.",["Salta alto.","Empuja la tabla con el pie delantero.","Recoloca los pies y aterriza flexionando."],"Practica la patada sin saltar.","tailwhip"],
+["dtw","Doble tailwhip","Aéreos con la tabla",3,"La tabla da dos vueltas.",["Salto muy alto.","Patada fuerte con el pie delantero.","Espera la segunda vuelta y aterriza."],"Antes, tailwhip muy consistente.","dtw"],
+["nofooter","No-footer","Aéreos con la tabla",3,"Saca los pies de la tabla en el aire.",["Salta alto.","Levanta los pies manteniendo las manos en la barra.","Recoloca los pies en la tabla."],"Practica sobre colchoneta.","nofoot"],
+["twbar","Full-whip","Aéreos con la tabla",3,"Tailwhip y barspin a la vez en la misma dirección.",["Salta alto.","Haz el tailwhip y suelta la barra para el barspin al mismo tiempo.","Agarra de nuevo y aterriza."],"Domina ambos por separado.","twbar"],
+["tw360","Tailwhip 360","Aéreos con la tabla",3,"Tailwhip mientras giras 360.",["Gira cabeza y hombros.","Patada de tailwhip a mitad de giro.","Aterriza fakie o recto."],"Prueba 360 y tailwhip por separado.","tw360"],
+["fflip","Frontflip","Flips",3,"Voltereta hacia delante con el patinete.",["Coge velocidad con rampa o salto grande.","Agarra la barra y rueda hacia delante.","Abre el cuerpo y aterriza."],"Solo con foso de espuma o instructor.","fflip"],
+["bflip","Backflip","Flips",3,"Voltereta hacia atrás con el patinete.",["Despega de una rampa con velocidad.","Tira de la barra y recoge las rodillas.","Abre y aterriza con rodillas flexionadas."],"Aprende en foso de espuma.","bflip"],
+["bbflip","Barspin backflip","Flips",3,"Backflip con barspin.",["Backflip estable y consistente.","Suelta la barra en medio del giro.","Agarra de nuevo y aterriza."],"Solo para expertos.","bbflip"],
+["drop","Drop-in","Parque y rampas",2,"Entra en la rampa desde arriba.",["Rueda trasera en el borde, delantera sobre la rampa.","Inclina el cuerpo hacia delante.","Empuja y deja que la rampa te lleve."],"Casco y protecciones.","drop"],
+["pump","Pumping","Parque y rampas",1,"Gana velocidad sin empujar.",["Flexiona al bajar la rampa.","Extiende las piernas al subir.","Repite en cada cambio de pendiente."],"Busca un bowl o transiciones suaves.","drop"],
+["air","Air en rampa","Parque y rampas",2,"Sal volando del borde de la rampa.",["Sube con velocidad media.","Salta al llegar al borde.","Controla la altura y baja alineado."],"Empieza con rampas bajas.","bunny"],
+["fakie-rampa","Fakie en rampa","Parque y rampas",2,"Baja la rampa hacia atrás.",["Sube la rampa de frente.","Para en el borde con el peso atrás.","Baja rodando en fakie."],"Mira por encima del hombro.","fakie"],
+["wallride","Wallride","Parque y rampas",2,"Rueda unos segundos por una pared.",["Acércate en ángulo a la pared.","Salta y apoya las ruedas.","Empuja la pared y vuelve al suelo."],"Elige una pared lisa y limpia.","bunny"],
+["flair","Flair","Parque y rampas",3,"Backflip con un giro de 180° al salir de la rampa.",["Sube la rampa con velocidad y salta al borde.","Haz un backflip y añade un giro de 180° durante la rotación.","Aterriza de vuelta en la rampa alineado."],"Domina antes backflip y 180 por separado, con foso de espuma.","flair"],
+["fufanu","Fufanu","Parque y rampas",3,"Parada en el borde de la rampa sobre la rueda trasera, mirando hacia fuera.",["Sube la rampa con velocidad media.","Apoya la rueda trasera en el borde (tire tap) mirando hacia fuera.","Baja en fakie con control."],"Empieza con rampas bajas y de borde ancho.","manual"],
+["50-50","50-50 grind","Grinds",2,"Desliza el lateral de la tabla con las dos ruedas colgando por un lado.",["Acércate paralelo al borde a velocidad media.","Salta y apoya el lateral de la tabla con las ruedas por fuera.","Salta hacia fuera con el patinete alineado."],"Usa un borde bajo y encerado.","grind"],
+["smith","Smith grind","Grinds",3,"Rueda trasera sobre el borde y la delantera colgando fuera.",["Acércate en ángulo al borde.","Salta y apoya la rueda trasera encima.","Mantén la delantera por fuera y sal con un salto."],"Aprende antes el 50-50.","grind"],
+["feeble","Feeble grind","Grinds",3,"Rueda delantera sobre el borde y la cola de la tabla deslizando.",["Acércate en ángulo al borde.","Salta y apoya la rueda delantera encima.","Deja deslizar la cola de la tabla y sal con un salto."],"Practica con un borde bajo.","grind"],
+["nosegrind","Nose grind","Grinds",3,"Grind solo con el peg delantero.",["Acércate recto al borde.","Salta y apoya el peg delantero.","Sal con un salto hacia delante."],"Mira el borde y mantén el equilibrio.","grind"],
+["icegrind","Ice grind","Grinds",3,"Grind sobre el peg trasero.",["Acércate recto al borde.","Salta y apoya el peg trasero.","Sal con un salto."],"Pon el peso ligeramente atrás.","grind"],
+["boardslide","Boardslide","Grinds",3,"Desliza por la parte inferior de la tabla mirando de frente.",["Acércate recto al borde o barra.","Salta y apoya la parte inferior de la tabla.","Sal con un salto y aterriza alineado."],"Empieza con un borde bajo y encerado.","grind"]
+].map(a=>({id:a[0],n:a[1],c:a[2],l:a[3],d:a[4],s:a[5],t:a[6],m:a[7]}));
+const cats=["Todos",...new Set(T.map(x=>x.c))];
+let cat="Todos",db=null,assets=null,me=null,clips=[],profs={};
+let viewU=null,pTab="clips",feed="all",follows={};
+const nm=u=>(profs[u]&&profs[u].name)||"Anónimo";
+const q=s=>esc(String(s||"")).replace(/"/g,"&quot;");
+const $=i=>document.getElementById(i);
+function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
+const LN=["","Fácil","Medio","Difícil"];
+
+function renderChips(){
+  $("chips").innerHTML=cats.map(c=>`<button class="chip ${c===cat?"on":""}" data-c="${c}">${c}</button>`).join("");
+  $("chips").onclick=e=>{const c=e.target.dataset.c;if(c){cat=c;renderChips();renderList()}};
+}
+function renderList(){
+  const card=x=>`
+  <div class="card" data-id="${x.id}">
+    <div class="row"><p class="t">${x.n}</p><span class="lvl l${x.l}">${LN[x.l]}</span></div>
+    <p class="d">${x.d}</p>
+    <div class="det">
+      <div class="an" data-id="${x.id}"></div><div class="m" style="margin:6px 0 8px;min-height:40px">Animación 3D de referencia</div><div style="margin:0 0 8px"><label class="sec" style="display:inline-block;margin-right:6px">📂 Cargar captura .bvh<input type="file" accept=".bvh,.txt" hidden data-bvh="${x.id}"></label><button class="sec" data-bvhoff="${x.id}">Animación base</button><button class="sec" data-fsa="${x.id}" style="margin-left:6px">⛶ Pantalla completa</button></div><ol>${x.s.map(s=>`<li>${s}</li>`).join("")}</ol>
+      <div class="tip">💡 ${x.t}</div><div class="tc" data-id="${x.id}" style="margin-top:12px"></div>
+      <p style="margin:10px 0 0"><button class="sec" data-up="${x.id}">Subir mi clip de este truco</button></p>
+    </div>
+  </div>`;
+  const qy=($("srch").value||"").toLowerCase().trim();
+  $("list").innerHTML=cats.slice(1).filter(c=>cat==="Todos"||c===cat).map(c=>{const L=T.filter(x=>x.c===c&&x.n.toLowerCase().includes(qy));return L.length?'<h2 class="sh">'+c+' <span>'+L.length+'</span></h2>'+L.map(card).join(""):""}).join("")||'<p class="m">No hay trucos con ese nombre.</p>';
+}
+$("srch").oninput=renderList;
+$("list").onclick=e=>{
+  const u=e.target.dataset.up;
+  if(u){show(2);$("sel").value=u;window.scrollTo(0,0);return}
+  const o=e.target.dataset.bvhoff;if(o){mocap[o]=null;return}const fa=e.target.dataset.fsa;if(fa){xl(e.target.closest(".det").querySelector(".an"));return}if(e.target.closest(".det"))return;const c=e.target.closest(".card");if(c){const o=c.classList.contains("open");document.querySelectorAll(".card.open").forEach(x=>x.classList.remove("open"));if(!o)c.classList.add("open")}
+};
+function show(n){
+  [1,2,3,4].forEach(i=>{$("v"+i).classList.toggle("hide",n!==i);$("t"+i).classList.toggle("on",n===i)});
+  if(n===3)renderProfile();
+  if(n===4)renderReels();
+}
+$("t1").onclick=()=>show(1);$("t2").onclick=()=>show(2);$("t3").onclick=()=>{viewU=null;pTab="clips";show(3)};$("t4").onclick=()=>show(4);
+const LV=["Principiante","Intermedio","Avanzado","Pro"];
+const ini=u=>{const p=profs[u]||{};return p.av?'<img src="'+q(p.av)+'" alt="" style="width:100%;height:100%;object-fit:cover">':esc((p.name||"?")[0].toUpperCase())};
+const fl=u=>follows[u]||[],fr=u=>Object.keys(follows).filter(k=>fl(k).includes(u));
+const cc=u=>clips.filter(c=>c.uid===u).length;
+const feedClips=()=>feed==="fol"?clips.filter(c=>fl(me).includes(c.uid)):clips;
+async function toggleFollow(u){
+  if(!db||!me||u===me)return;
+  const cur=fl(me),ids=cur.includes(u)?cur.filter(x=>x!==u):[...cur,u];
+  follows[me]=ids;renderProfile();renderClips();
+  try{await db.collection("follows").doc(me).set({ids})}catch(e){}
+}
+const fbtn=u=>u===me?"":'<button class="sec" data-f="'+q(u)+'">'+(fl(me).includes(u)?"Siguiendo":"Seguir")+'</button>';
+const prow=u=>'<div class="row" style="margin-bottom:10px"><div data-u="'+q(u)+'" style="display:flex;align-items:center;gap:10px;cursor:pointer"><div class="av">'+ini(u)+'</div><div><b>'+esc(nm(u))+'</b><div class="m">'+cc(u)+' clips</div></div></div>'+fbtn(u)+'</div>';
+let rlKey="",rlObs;
+function renderReels(){
+  const el=$("reels");
+  if(!db){el.innerHTML='<div class="msg">Inicia sesión para ver los reels.</div>';return}
+  const key=clips.map(c=>c.id).join();
+  if(key!==rlKey){
+    rlKey=key;if(rlObs)rlObs.disconnect();
+    el.innerHTML=clips.length?'<div class="m" style="margin-bottom:6px">Desliza para ver más · Toca el vídeo para el sonido</div><div class="rl">'+clips.map(c=>{const tr=T.find(x=>x.id===c.trick)||{};return '<div class="rv"><button class="fsb" data-xl="1">⛶</button><video src="'+q(c.url)+'" loop muted playsinline preload="metadata"></video><div class="ro"><div style="display:flex;align-items:center;gap:8px"><div class="av" style="width:36px;height:36px;cursor:pointer" data-u="'+q(c.uid)+'">'+ini(c.uid)+'</div><b data-u="'+q(c.uid)+'" style="cursor:pointer">'+esc(nm(c.uid))+'</b><span data-fb="'+q(c.uid)+'"></span><button class="sec" style="padding:4px 10px;margin-left:auto" data-rep="'+c.id+'">⚑</button></div><div style="margin-top:6px">'+esc(c.title||tr.n||"")+'</div><div style="font-size:13px;opacity:.7">'+esc(tr.n||"")+'</div></div></div>'}).join("")+'</div>':'<p class="m">Aún no hay reels. Sube un clip en Comunidad.</p>';
+    rlObs=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector("video");if(e.isIntersecting)v.play().catch(()=>{});else v.pause()}),{root:el.querySelector(".rl"),threshold:.7});
+    el.querySelectorAll(".rv").forEach(r=>rlObs.observe(r));
+  }
+  el.querySelectorAll("[data-fb]").forEach(b=>{const u=b.dataset.fb;b.innerHTML=u===me?"":'<button class="sec" style="padding:4px 10px" data-f="'+q(u)+'">'+(fl(me).includes(u)?"Siguiendo":"Seguir")+'</button>'});
+}
+function xl(box){
+  const v=box.querySelector("video"),on=box.classList.toggle("xl");
+  document.body.style.overflow=on?"hidden":"";
+  if(v){v.controls=on||box.classList.contains("vw");if(on&&box.classList.contains("rv"))v.muted=false}
+  let b=box.querySelector(".fsb[data-xl]");
+  if(box.classList.contains("an")){if(on){b=document.createElement("button");b.className="fsb";b.dataset.xl="1";b.textContent="✕";box.appendChild(b)}else if(b)b.remove()}
+  else if(b)b.textContent=on?"✕":"⛶";
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-xl]");if(!b)return;const box=b.closest(".rv,.an,.vw");if(box)xl(box)});
+function fsGo(box,v){
+  if(v&&v.webkitEnterFullscreen&&!box.requestFullscreen){v.webkitEnterFullscreen();return}
+  const f=box.requestFullscreen||box.webkitRequestFullscreen;if(f)try{f.call(box)}catch(x){}
+}
+document.addEventListener("fullscreenchange",()=>{document.querySelectorAll(".rv video").forEach(v=>{const on=document.fullscreenElement&&document.fullscreenElement.contains(v);v.controls=!!on;if(on)v.muted=false})});
+$("reels").onclick=e=>{const r=e.target.closest(".rv");if(!r)return;const v=r.querySelector("video");if(e.target.closest("[data-xl],[data-u],[data-f],[data-rep]"))return;v.muted=!v.muted};
+function renderSearch(){
+  const v=($("psr").value||"").toLowerCase().trim(),el=$("psres");
+  if(!v||!db){el.innerHTML="";return}
+  const ids=Object.keys(profs).filter(u=>u!==me&&(profs[u].name||"").toLowerCase().includes(v)).slice(0,20);
+  el.innerHTML=ids.length?'<div class="card">'+ids.map(prow).join("")+'</div>':'<p class="m" style="margin:0 0 10px">No hay nadie con ese apodo.</p>';
+}
+$("psr").oninput=renderSearch;
+async function setAv(f){
+  const b=await createImageBitmap(f),c=document.createElement("canvas");c.width=c.height=256;
+  const m=Math.min(b.width,b.height);c.getContext("2d").drawImage(b,(b.width-m)/2,(b.height-m)/2,m,m,0,0,256,256);
+  const blob=await new Promise(r=>c.toBlob(r,"image/jpeg",.85)),r=await assets.upload(blob);
+  await db.collection("profiles").doc(me).set({...(profs[me]||{}),av:r.url});
+}
+function renderProfile(){
+  renderSearch();renderReels();const pf=$("pf"),mine=$("mine");
+  if(!db||!me){pf.innerHTML='<p class="m" style="margin:0">Inicia sesión para crear tu perfil.</p>';mine.innerHTML="";return}
+  if(pf.contains(document.activeElement)&&/INPUT|SELECT/.test(document.activeElement.tagName))return;
+  const u=viewU||me,own=u===me,p=profs[u]||{},uc=clips.filter(c=>c.uid===u),fers=fr(u),fing=fl(u);
+  let h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div class="av" style="width:64px;height:64px;font-size:26px">'+ini(u)+'</div><div style="flex:1"><p class="t">'+esc(p.name||(own?"Tu perfil":"Anónimo"))+'</p><div class="m">'+esc(p.lvl||LV[0])+(p.fav?" · Favorito: "+esc((T.find(x=>x.id===p.fav)||{}).n||""):"")+'</div></div></div>';
+  if(p.bio)h+='<div style="margin-bottom:10px">'+esc(p.bio)+'</div>';
+  h+='<div class="row" style="gap:6px;margin-bottom:12px">'+[["clips","Clips",uc.length],["followers","Seguidores",fers.length],["following","Siguiendo",fing.length]].map(a=>'<button class="chip'+(pTab===a[0]?" on":"")+'" style="flex:1;padding:8px" data-ptab="'+a[0]+'"><b>'+a[2]+'</b> '+a[1]+'</button>').join("")+'</div>';
+  if(own)h+=(assets?'<label class="sec" style="display:inline-block;margin:0 0 8px">📷 Cambiar foto<input type="file" accept="image/*" hidden id="pav"></label>':"")+'<input id="pn" placeholder="Tu nombre o apodo" maxlength="24" value="'+q(p.name)+'"><input id="pb" placeholder="Sobre ti" maxlength="120" value="'+q(p.bio)+'"><select id="pl">'+LV.map(l=>'<option'+(l===(p.lvl||LV[0])?" selected":"")+'>'+l+'</option>').join("")+'</select><select id="pt"><option value="">Truco favorito</option>'+T.map(x=>'<option value="'+x.id+'"'+(x.id===p.fav?" selected":"")+'>'+x.n+'</option>').join("")+'</select><button class="pri" id="psv">Guardar perfil</button> <span class="m" id="pst"></span>';
+  else h+='<button class="pri" data-f="'+q(u)+'">'+(fl(me).includes(u)?"Siguiendo ✓":"Seguir")+'</button> <button class="sec" data-home="1" style="margin-left:6px">← Mi perfil</button>';
+  pf.innerHTML=h;
+  if(own)$("psv").onclick=async()=>{
+    try{await db.collection("profiles").doc(me).set({name:$("pn").value.trim(),bio:$("pb").value.trim(),lvl:$("pl").value,fav:$("pt").value,av:p.av||""});$("pst").textContent="Guardado ✓"}catch(e){$("pst").textContent="No se pudo guardar."}
+  };
+  if(own&&assets&&$("pav"))$("pav").onchange=async e=>{const f=e.target.files[0];if(!f)return;$("pst")&&($("pst").textContent="Subiendo…");try{await setAv(f)}catch(x){$("pst")&&($("pst").textContent="No se pudo subir la foto.")}};
+  let b="";
+  if(pTab==="clips")b=uc.length?uc.map(c=>'<div class="card"><div class="vw"><button class="fsb" data-xl="1">⛶</button><video controls preload="metadata" playsinline src="'+q(c.url)+'"></video></div><div class="row" style="margin-top:8px"><b>'+esc(c.title||(T.find(x=>x.id===c.trick)||{}).n||"Clip")+'</b>'+(own?'<button class="sec" data-del="'+c.id+'">Borrar</button>':"")+'</div></div>').join(""):'<p class="m">'+(own?"Aún no has subido clips.":"Aún no ha subido clips.")+'</p>';
+  else{const L=pTab==="followers"?fers:fing;b=L.length?'<div class="card">'+L.map(prow).join("")+'</div>':'<p class="m">'+(pTab==="followers"?"Aún no tiene seguidores.":"Aún no sigue a nadie.")+'</p>'}
+  if(own){const o=[...new Set([...Object.keys(profs),...clips.map(c=>c.uid)])].filter(x=>x&&x!==me&&!fl(me).includes(x)).slice(0,20);
+    b+='<p class="t" style="margin:16px 0 8px">Descubrir personas</p>'+(o.length?'<div class="card">'+o.map(prow).join("")+'</div>':'<p class="m">No hay más personas todavía.</p>')}
+  mine.innerHTML=b;
+}
+$("mine").onclick=e=>$("clips").onclick(e);
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-f],[data-u],[data-ptab],[data-feed],[data-home],[data-rep]");if(!t)return;
+  const d=t.dataset;
+  if(d.f)toggleFollow(d.f);
+  else if(d.u){$("psr").value="";viewU=d.u===me?null:d.u;pTab="clips";show(3);window.scrollTo(0,0)}
+  else if(d.ptab){pTab=d.ptab;renderProfile()}
+  else if(d.feed){feed=d.feed;renderClips()}
+  else if(d.home){viewU=null;pTab="clips";renderProfile()}
+  else if(d.rep){if(!db||!me||!confirm("¿Denunciar este clip por contenido inapropiado?"))return;db.collection("reports").doc("r"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)).set({clip:d.rep,by:me,ts:Date.now()}).then(()=>alert("Gracias, hemos recibido tu denuncia.")).catch(()=>alert("No se pudo enviar la denuncia."))}
+});
+
+$("sel").innerHTML=T.map(x=>`<option value="${x.id}">${x.n}</option>`).join("");
+
+function renderClips(){
+  const el=$("clips");
+  $("fchips").innerHTML=[["all","Todos"],["fol","Siguiendo"]].map(a=>'<button class="chip'+(feed===a[0]?" on":"")+'" data-feed="'+a[0]+'">'+a[1]+'</button>').join("");
+  if(!db){el.innerHTML='<div class="msg">Inicia sesión para ver y compartir clips de la comunidad.</div>';return}
+  if(!feedClips().length){el.innerHTML='<p class="m">'+(feed==="fol"?"Aún no sigues a nadie o no han subido clips.":"Todavía no hay clips. ¡Sé el primero en subir uno!")+'</p>';return}
+  el.innerHTML=feedClips().map(c=>{
+    const tr=T.find(x=>x.id===c.trick);
+    return `<div class="card">
+      <div class="vw"><button class="fsb" data-xl="1">⛶</button><video controls preload="metadata" playsinline src="${esc(c.url)}"></video></div>
+      <div class="row" style="margin-top:8px"><div><b>${esc(c.title||tr?.n||"Clip")}</b><div class="m"><a data-u="${q(c.uid)}" style="text-decoration:underline;cursor:pointer">${esc(nm(c.uid))}</a> · ${esc(tr?.n||"")} · ${new Date(c.ts).toLocaleDateString("es")}</div></div>
+      ${me&&c.uid===me?`<button class="sec" data-del="${c.id}">Borrar</button>`:(me?`<button class="sec" data-rep="${c.id}">Denunciar</button>`:"")}</div></div>`}).join("");
+}
+$("clips").onclick=async e=>{
+  const id=e.target.dataset.del;if(!id||!confirm("¿Borrar este clip?"))return;
+  try{await db.collection("clips").doc(id).delete()}catch(x){$("st").textContent="No se pudo borrar."}
+};
+$("btn").onclick=async()=>{
+  const f=$("file").files[0],st=$("st");
+  if(!assets||!db){st.textContent="Subir no está disponible ahora.";return}
+  if(!f){st.textContent="Elige un vídeo primero.";return}
+  if(f.size>20*1024*1024){st.textContent="El vídeo pasa de 20 MB.";return}
+  $("btn").disabled=true;st.textContent="Subiendo…";
+  try{
+    const r=await assets.upload(f);
+    const id="c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    await db.collection("clips").doc(id).set({trick:$("sel").value,title:$("ttl").value.trim(),assetId:r.id,url:r.url,uid:me||"",ts:Date.now()});
+    st.textContent="¡Clip subido!";$("file").value="";$("ttl").value="";
+  }catch(x){st.textContent="Error al subir: "+(x&&x.message||"inténtalo de nuevo")}
+  $("btn").disabled=false;
+};
+
+const E=x=>x<0?0:x>1?1:x,R=(p,a,b)=>E((p-a)/(b-a)),J=(p,a,b)=>p<a||p>b?0:Math.sin(Math.PI*(p-a)/(b-a)),PI=Math.PI;
+const A={
+bunny:p=>({h:62*J(p,.3,.8),pi:-.3*J(p,.3,.55)+.1*J(p,.55,.8)}),
+manual:p=>({pi:-.55*Math.min(R(p,.15,.3),1-R(p,.75,.9))}),
+fakie:p=>({dir:-1,lean:-.2}),
+decade:p=>({h:60*J(p,.3,.8),yaw:PI*R(p,.4,.65)}),
+barspin:p=>({h:62*J(p,.3,.8),bs:2*PI*R(p,.42,.62)}),
+tailwhip:p=>({h:66*J(p,.3,.8),tw:2*PI*R(p,.4,.6),fu:J(p,.38,.62)}),
+"x-up":p=>({h:62*J(p,.3,.8),x:J(p,.42,.66)}),
+tuck:p=>({h:78*J(p,.28,.82),ho:J(p,.4,.7),fu:.6*J(p,.4,.7)}),
+grind:p=>({h:26*(R(p,.34,.4)-R(p,.64,.7)),ledge:1}),
+drop:p=>({pi:.45*Math.min(R(p,.2,.35),1-R(p,.4,.7)),lean:.3*R(p,.2,.5)}),
+flair:p=>({h:80*J(p,.28,.82),yaw:PI*R(p,.38,.68),pi:-.3*J(p,.3,.8)})
+};
+let rig;
+const TV=window.THREE?THREE.Vector3:null,Yv=TV?new TV(0,1,0):null,V=(x,y,z)=>new TV(x,y,z);
+function limb(m,a,b){const d=new TV().subVectors(b,a),l=d.length()||.001;m.position.copy(a).addScaledVector(d,.5);m.scale.y=l;m.quaternion.setFromUnitVectors(Yv,d.normalize())}
+function ik(a,b,l1,l2,pole){
+  const d=b.clone().sub(a),L=Math.min(d.length(),l1+l2-.003),u=d.normalize();
+  const x=(l1*l1-l2*l2+L*L)/(2*L),hh=Math.sqrt(Math.max(l1*l1-x*x,0));
+  const pp=pole.clone().sub(u.clone().multiplyScalar(pole.dot(u))).normalize();
+  return [a.clone().addScaledVector(u,x).addScaledVector(pp,hh),a.clone().addScaledVector(u,L)];
+}
+function init3(){
+  if(!window.THREE)return null;
+  try{
+    const r=new THREE.WebGLRenderer({antialias:true});
+    r.setPixelRatio(Math.min(devicePixelRatio||1,2));r.setSize(640,320,false);
+    r.domElement.style.cssText="display:block;width:100%;height:100%";
+    const sc=new THREE.Scene();sc.background=new THREE.Color(0x0d0d0d);
+    sc.add(new THREE.HemisphereLight(0xffffff,0x333344,.75));
+    const dl=new THREE.DirectionalLight(0xffffff,.8);dl.position.set(3,6,4);sc.add(dl);
+    const cam=new THREE.PerspectiveCamera(38,2,.1,100);
+    const floor=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.MeshBasicMaterial({color:0x151515}));floor.rotation.x=-Math.PI/2;sc.add(floor);
+    const grid=new THREE.GridHelper(40,40,0x555555,0x2a2a2a);grid.position.y=.005;sc.add(grid);
+    const shadow=new THREE.Mesh(new THREE.CircleGeometry(1,24),new THREE.MeshBasicMaterial({color:0,transparent:true,opacity:.6}));
+    shadow.rotation.x=-Math.PI/2;shadow.position.y=.012;sc.add(shadow);
+    const M=c=>new THREE.MeshLambertMaterial({color:c}),white=M(0xf2f2f2),dark=M(0x1b1b1b),rim=M(0xdddddd);
+    const skin=M(0xd9a384),jacket=M(0xd0d0d0),pants=M(0x2a3550),shoe=M(0xffffff),helm=M(0xe8421f);
+    const cyl=(r1,r2,m)=>new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,1,14),m);
+    const ball=(rad,m)=>new THREE.Mesh(new THREE.SphereGeometry(rad,14,10),m);
+    const S=new THREE.Group();sc.add(S);
+    const deckPiv=new THREE.Group();deckPiv.position.set(.75,0,0);S.add(deckPiv);
+    const deck=new THREE.Mesh(new THREE.BoxGeometry(1.7,.05,.4),white);deck.position.x=-.85;deckPiv.add(deck);
+    const wheel=()=>{const g=new THREE.Group(),t=new THREE.Mesh(new THREE.CylinderGeometry(.15,.15,.09,18),dark),h=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,.1,12),rim);
+      t.rotation.x=h.rotation.x=Math.PI/2;g.add(t,h);return g};
+    const bw=wheel();bw.position.set(-1.7,-.13,0);deckPiv.add(bw);
+    const fw=wheel();fw.position.set(.85,-.13,0);S.add(fw);
+    const stem=cyl(.035,.035,white);S.add(stem);limb(stem,V(.85,-.05,0),V(.75,1.55,0));
+    const barP=new THREE.Group();barP.position.set(.75,1.55,0);S.add(barP);
+    const bar=cyl(.03,.03,dark);bar.rotation.x=Math.PI/2;bar.scale.y=.8;barP.add(bar);
+    const mk=(a,b,m)=>{const c=cyl(a,b,m);S.add(c);return c},jt=(rad,m)=>{const b=ball(rad,m);S.add(b);return b};
+    const th=[mk(.075,.095,pants),mk(.075,.095,pants)],sh=[mk(.055,.07,pants),mk(.055,.07,pants)],kn=[jt(.075,pants),jt(.075,pants)];
+    const ua=[mk(.05,.06,jacket),mk(.05,.06,jacket)],fa=[mk(.04,.05,jacket),mk(.04,.05,jacket)],el=[jt(.055,jacket),jt(.055,jacket)],hand=[jt(.045,skin),jt(.045,skin)];
+    const shoes=[0,1].map(()=>{const b=new THREE.Mesh(new THREE.BoxGeometry(.32,.09,.13),shoe);S.add(b);return b});
+    const pel=jt(.16,pants);pel.scale.set(.9,.7,1.25);
+    const to=mk(.2,.15,jacket);to.scale.x=.8;to.scale.z=1.45;
+    const shd=[jt(.075,jacket),jt(.075,jacket)];
+    const nk=mk(.045,.05,skin),hd=jt(.12,skin);hd.scale.set(.95,1.2,.95);
+    const hm=new THREE.Mesh(new THREE.SphereGeometry(1,16,10,0,Math.PI*2,0,Math.PI*.58),helm);hm.scale.set(.16,.16,.16);S.add(hm);
+    const ledge=new THREE.Mesh(new THREE.BoxGeometry(5.5,.65,1.4),M(0x8a8a8a));ledge.visible=false;sc.add(ledge);
+    return {r,sc,cam,grid,shadow,S,deckPiv,barP,fw,stem,th,sh,kn,ua,fa,el,hand,shoes,pel,to,shd,nk,hd,hm,ledge,wh:[bw,fw]};
+  }catch(e){return null}
+}
+function frame(id,p,t){
+  const s=(A[id]||A[(T.find(x=>x.id===id)||{}).m||"bunny"])(p),k=rig,nz=q=>Math.sin(t*.0017+q)*.5+Math.sin(t*.0043+q*2.7)*.5;
+  const n=Math.floor(t/3400),v=.88+.24*Math.abs((Math.sin(n*127.1)*43758.5)%1),jumpy=id!=="manual"&&id!=="fakie";
+  const H=(s.h||0)*v,cr=jumpy?.8*J(p,.08,.32)+.7*J(p,.76,.98):(id==="manual"?.25*R(p,.1,.2)*(1-R(p,.85,.95)):0),fu=s.fu||0,lv=s.lean||0;
+  [k.deckPiv,k.fw,k.stem,k.barP].forEach(o=>o.visible=true);k.S.position.y=.375+H/40;k.S.rotation.z=-(s.pi||0);k.S.rotation.y=s.yaw||0;
+  k.deckPiv.rotation.y=s.tw||0;k.barP.rotation.y=s.bs||0;
+  const spin=-t*.004*(s.dir||1);k.wh[0].rotation.z=k.wh[1].rotation.z=spin;
+  const hy=.9-.2*cr-fu*.12,hx=.08-.08*cr+nz(1)*.01,th=.1+.35*cr+lv*1.2+nz(2)*.02;
+  const ry=s.ry||0,rt=v=>{const dx=v.x-.75,c=Math.cos(ry),sn=Math.sin(ry);return V(.75+dx*c+v.z*sn,v.y,-dx*sn+v.z*c)},cr0=V(hx+Math.sin(th)*.62,hy+Math.cos(th)*.62,0),hipC=rt(V(hx,hy,0)),chest=rt(cr0);
+  const hip=[rt(V(hx,hy,.1)),rt(V(hx,hy,-.1))],sho=[rt(V(cr0.x,cr0.y,.2)),rt(V(cr0.x,cr0.y,-.2))];
+  const ft=[rt(V(-.3+fu*.3,.1+fu*.55,.08)),rt(V(.35-fu*.25,.1+fu*.55,-.08))];
+  for(let i=0;i<2;i++){
+    const [kp,fp]=ik(hip[i],ft[i],.46,.46,V(1,0,i?-.3:.3));
+    limb(k.th[i],hip[i],kp);limb(k.sh[i],kp,fp);k.kn[i].position.copy(kp);
+    k.shoes[i].position.set(fp.x+.06,fp.y-.04,fp.z);k.shoes[i].rotation.z=-.05-fu*.4;
+  }
+  limb(k.to,hipC,chest);k.pel.position.copy(hipC);
+  const bs=s.bs||0,x=s.x||0,e=z=>V(.75+z*Math.sin(bs),1.55,z*Math.cos(bs));
+  let g=[e(.4*(1-2*x)),e(-.4*(1-2*x))];
+  if(s.ho)g=[V(.45+nz(3)*.03,1.2,.5),V(.45+nz(4)*.03,1.2,-.5)];
+  else if(bs>0&&Math.abs(Math.cos(bs))<.9)g[1]=V(.45,1.35,-.45);
+  for(let i=0;i<2;i++){
+    k.shd[i].position.copy(sho[i]);
+    const [ep,hp]=ik(sho[i],g[i],.3,.3,V(-.2,-1,i?-.8:.8));
+    limb(k.ua[i],sho[i],ep);limb(k.fa[i],ep,hp);k.el[i].position.copy(ep);k.hand[i].position.copy(hp);
+  }
+  const hp=rt(V(cr0.x+.05+Math.sin(th)*.1+nz(5)*.015,cr0.y+.3,nz(6)*.02));
+  limb(k.nk,chest,hp);k.hd.position.copy(hp);k.hm.position.set(hp.x,hp.y+.03,hp.z);
+  k.ledge.visible=!!s.ledge;if(s.ledge)k.ledge.position.set((700-p*940+110-320)/40,.325,0);
+  k.shadow.position.x=0;k.shadow.scale.set(1.1,.45,1);k.shadow.material.opacity=.6/(1+H/30);
+  k.grid.position.x=-((t/1000*1.5*(s.dir||1))%1);
+  camFit(k,t,peakOf(id));
+  k.r.render(k.sc,k.cam);
+}
+const mocap={},mocapErr={id:"",until:0,msg:""};
+function parseBVH(txt){
+  const tk=txt.split(/\s+/).filter(Boolean),J=[];let i=tk.indexOf("ROOT")+1;if(i<1)throw 0;
+  const pj=par=>{const j={name:tk[i++],par,ch:[],off:[0,0,0]};J.push(j);i++;
+    while(tk[i]!=="}"){const w=tk[i++];
+      if(w==="OFFSET"){j.off=[+tk[i],+tk[i+1],+tk[i+2]];i+=3}
+      else if(w==="CHANNELS"){const n=+tk[i++];j.ch=tk.slice(i,i+n);i+=n}
+      else if(w==="JOINT")pj(J.indexOf(j));
+      else if(w==="End"){i+=2;while(tk[i++]!=="}");}}
+    i++};
+  pj(-1);
+  const mi=tk.indexOf("MOTION"),n=+tk[mi+2],ft=+tk[mi+5],nch=J.reduce((a,j)=>a+j.ch.length,0),D=tk.slice(mi+6,mi+6+n*nch).map(Number);
+  if(!(n>0)||!(ft>0)||D.length<n*nch)throw 0;
+  const fk=f=>{let c=f*nch;const W=[],P=[];
+    J.forEach((j,x)=>{const m=new THREE.Matrix4().makeTranslation(j.off[0],j.off[1],j.off[2]);
+      j.ch.forEach(ch=>{const v=D[c++],a=v*Math.PI/180,T=new THREE.Matrix4();
+        if(ch==="Xposition")T.makeTranslation(v,0,0);else if(ch==="Yposition")T.makeTranslation(0,v,0);else if(ch==="Zposition")T.makeTranslation(0,0,v);
+        else if(ch==="Xrotation")T.makeRotationX(a);else if(ch==="Yrotation")T.makeRotationY(a);else T.makeRotationZ(a);m.multiply(T)});
+      W[x]=j.par<0?m:W[j.par].clone().multiply(m);P[x]=new THREE.Vector3().setFromMatrixPosition(W[x])});
+    return P};
+  const fl=J.map(j=>j.name.toLowerCase()),fing=/thumb|index|middle|ring|pinky|finger|toe|end/;
+  const pick=re=>fl.map((s,x)=>re.test(s)&&!fing.test(s)?x:-1).filter(x=>x>=0),P0=fk(0);
+  const head=pick(/head/)[0],fts=pick(/foot|ankle/).slice(0,2).sort((a,b)=>P0[a].x-P0[b].x),has=pick(/hand|wrist/).slice(0,2).sort((a,b)=>P0[a].x-P0[b].x);
+  if(head===undefined||fts.length<2||has.length<2)throw 0;
+  const neck=pick(/neck/)[0]??J[head].par,sh=fts.map(x=>J[x].par),th=sh.map(x=>J[x].par),fa=has.map(x=>J[x].par),ua=fa.map(x=>J[x].par);
+  if([...sh,...th,...fa,...ua].some(x=>x<0))throw 0;
+  const ymin=Math.min(P0[fts[0]].y,P0[fts[1]].y),h=P0[head].y-ymin;if(!(h>0))throw 0;
+  const sc=1.55/h;return {n,ft,dur:n*ft,fk,sc,oy:ymin-.1/sc,neck,head,fts,has,sh,th,fa,ua};
+}
+const PKS={};
+function peakOf(id){
+  if(PKS[id]!==undefined)return PKS[id];
+  const fn=A[id]||A[(T.find(x=>x.id===id)||{}).m||"bunny"];let m=0;
+  for(let i=0;i<=50;i++)m=Math.max(m,((fn(i/50).h)||0)/40*1.15);
+  return PKS[id]=m;
+}
+function camFit(k,t,peak){
+  const asp=k.cam.aspect||2,cy=(peak+2.5)/2,hh=cy+.4,tn=Math.tan(19*Math.PI/180),d=Math.max(hh/tn,2/(tn*asp));
+  const a=.55+Math.sin(t/2600)*.65;
+  k.cam.position.set(Math.sin(a)*d,cy+d*.1,Math.cos(a)*d);k.cam.lookAt(0,cy,0);
+}
+function frameBVH(m,t,k){
+  [k.deckPiv,k.fw,k.stem,k.barP,k.ledge].forEach(o=>o.visible=false);
+  k.S.position.set(0,0,0);k.S.rotation.set(0,0,0);
+  const fi=((t/1000)%m.dur)/m.ft,f0=Math.floor(fi)%m.n,f1=(f0+1)%m.n,a=fi-Math.floor(fi),A0=m.fk(f0),A1=m.fk(f1);
+  const Q=A0.map((p,x)=>p.clone().lerp(A1[x],a)),H=Q[0];
+  const g=x=>{const p=Q[x];return V((p.z-H.z)*m.sc,(p.y-m.oy)*m.sc,-(p.x-H.x)*m.sc)};
+  for(let i=0;i<2;i++){
+    const hp=g(m.th[i]),kp=g(m.sh[i]),fp=g(m.fts[i]),sp=g(m.ua[i]),ep=g(m.fa[i]),hn=g(m.has[i]);
+    limb(k.th[i],hp,kp);limb(k.sh[i],kp,fp);k.kn[i].position.copy(kp);k.shoes[i].position.set(fp.x+.05,fp.y-.03,fp.z);k.shoes[i].rotation.set(0,0,0);
+    limb(k.ua[i],sp,ep);limb(k.fa[i],ep,hn);k.el[i].position.copy(ep);k.hand[i].position.copy(hn);k.shd[i].position.copy(sp);
+  }
+  const hs=g(0),nk=g(m.neck),hd=g(m.head);
+  limb(k.to,hs,nk);k.pel.position.copy(hs);limb(k.nk,nk,hd);
+  const hc=hd.clone();hc.y+=.1;k.hd.position.copy(hc);k.hm.position.set(hc.x,hc.y+.03,hc.z);
+  k.grid.position.x=-((H.z*m.sc)%1);k.shadow.scale.set(.7,.4,1);k.shadow.material.opacity=.6;
+  camFit(k,t,.8);
+  k.r.render(k.sc,k.cam);
+}
+async function loadM(id,d){
+  if(!d||!d.url||(mocap[id]&&mocap[id].url===d.url))return;
+  try{const r=await fetch(d.url),m=parseBVH(await r.text());m.name=d.name||"captura.bvh";m.url=d.url;mocap[id]=m}catch(e){}
+}
+$("list").onchange=async e=>{
+  const id=e.target.dataset.bvh,f=e.target.files&&e.target.files[0];if(!id||!f)return;
+  try{
+    const txt=await f.text(),m=parseBVH(txt);m.name=f.name;mocap[id]=m;
+    if(assets&&db){try{const r=await assets.upload(new Blob([txt],{type:"text/plain"}));m.url=r.url;await db.collection("mocap").doc(id).set({url:r.url,name:f.name,ts:Date.now()})}catch(x){}}
+  }catch(x){mocapErr.id=id;mocapErr.until=performance.now()+6000;mocapErr.msg="No se pudo leer el BVH: necesita esqueleto humano con el eje Y hacia arriba."}
+  e.target.value="";
+};
+function renderTC(id){
+  const el=document.querySelector('.card.open .tc[data-id="'+id+'"]');if(!el)return;
+  const cs=clips.filter(c=>c.trick===id).slice(0,3),key=cs.map(c=>c.id).join()+"|"+(db?1:0);
+  if(el.dataset.k===key)return;el.dataset.k=key;
+  el.innerHTML='<p class="m" style="margin:0 0 6px">Clips de la comunidad</p>'+(cs.length?cs.map(c=>'<div class="vw" style="margin-bottom:6px"><button class="fsb" data-xl="1">⛶</button><video controls preload="metadata" playsinline src="'+q(c.url)+'"></video></div><div class="m" style="margin:0 0 8px">'+esc(nm(c.uid))+'</div>').join(""):'<p class="m">Aún no hay clips de este truco. Súbelo en Comunidad.</p>');
+}
+Object.assign(A,{
+nose:p=>({pi:.45*Math.min(R(p,.15,.3),1-R(p,.75,.9))}),
+yaw180:p=>({h:60*J(p,.3,.8),yaw:PI*R(p,.4,.65)}),
+yaw360:p=>({h:64*J(p,.3,.8),yaw:2*PI*R(p,.38,.7)}),
+yaw540:p=>({h:70*J(p,.28,.82),yaw:3*PI*R(p,.36,.72)}),
+yaw720:p=>({h:76*J(p,.26,.84),yaw:4*PI*R(p,.34,.74)}),
+dbar:p=>({h:70*J(p,.3,.8),bs:4*PI*R(p,.4,.65)}),
+nohand:p=>({h:66*J(p,.3,.8),ho:J(p,.4,.7)}),
+super:p=>({h:72*J(p,.3,.8),ho:J(p,.4,.7),pi:.5*J(p,.4,.7),fu:.3*J(p,.4,.7)}),
+dtw:p=>({h:72*J(p,.28,.82),tw:4*PI*R(p,.38,.62),fu:J(p,.36,.64)}),
+nofoot:p=>({h:66*J(p,.3,.8),fu:J(p,.4,.7)}),
+twbar:p=>({h:72*J(p,.28,.82),tw:2*PI*R(p,.4,.62),bs:2*PI*R(p,.42,.64),fu:J(p,.38,.64)}),
+tw360:p=>({h:72*J(p,.28,.82),tw:2*PI*R(p,.4,.62),yaw:2*PI*R(p,.4,.65),fu:J(p,.38,.64)}),
+fflip:p=>({h:90*J(p,.28,.82),pi:2*PI*R(p,.38,.68)}),
+bflip:p=>({h:90*J(p,.28,.82),pi:-2*PI*R(p,.38,.68)}),
+bbflip:p=>({h:90*J(p,.28,.82),pi:-2*PI*R(p,.38,.68),bs:2*PI*R(p,.45,.65)}),
+decade:p=>({h:64*J(p,.28,.82),ry:PI*R(p,.38,.62),fu:J(p,.38,.62)}),
+flair:p=>({h:92*J(p,.28,.82),pi:-2*PI*R(p,.38,.68),yaw:PI*R(p,.38,.68)}),
+turndown:p=>({h:62*J(p,.3,.8),tw:.5*PI*J(p,.38,.72),bs:.5*PI*J(p,.38,.72),fu:.5*J(p,.38,.72)})
+});
+function loop(t){
+  const h=document.querySelector(".card.open .an");
+  if(h){
+    if(rig===undefined)rig=init3();
+    if(rig){
+      if(h.firstChild!==rig.r.domElement)h.prepend(rig.r.domElement);
+      const W=h.clientWidth,Hh=h.clientHeight;if(W&&Hh&&(rig.W!==W||rig.H!==Hh)){rig.W=W;rig.H=Hh;rig.r.setSize(W,Hh,false);rig.cam.aspect=W/Hh;rig.cam.updateProjectionMatrix()}
+      const id=h.dataset.id,tr=T.find(x=>x.id===id),p=(t/1000%3.4)/3.4;
+      const mm=mocap[id];if(mm)frameBVH(mm,t,rig);else frame(id,p,t);renderTC(id);
+      const cap=h.nextElementSibling,i=Math.min(tr.s.length-1,Math.floor(p*tr.s.length)),txt=(mocapErr.id===id&&t<mocapErr.until)?mocapErr.msg:mm?"Captura real: "+mm.name:"Paso "+(i+1)+": "+tr.s[i];
+      if(cap.textContent!==txt)cap.textContent=txt;
+    }else if(!h.dataset.err){h.dataset.err=1;h.textContent="La animación 3D no está disponible en este dispositivo."}
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+renderChips();renderList();renderClips();
+(async()=>{
+  try{
+    if(!window.claude)return;
+    const [d,a,u]=await Promise.all([claude.use("db"),claude.use("assets"),claude.use("user")]);
+    db=d;assets=a;
+    try{me=u?await u.id():null}catch(e){}
+    if(!assets)$("up").classList.add("hide"),$("noup").classList.remove("hide");
+    if(db){
+      db.collection("clips").onSnapshot(s=>{
+        clips=s.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>b.ts-a.ts);renderClips();renderProfile();
+      },()=>{});
+      db.collection("follows").onSnapshot(s=>{follows={};s.docs.forEach(x=>follows[x.id]=(x.data().ids)||[]);renderClips();renderProfile()},()=>{});
+      db.collection("mocap").onSnapshot(s=>s.docs.forEach(d=>loadM(d.id,d.data())),()=>{});
+      db.collection("profiles").onSnapshot(s=>{
+        profs={};s.docs.forEach(x=>profs[x.id]=x.data());renderClips();renderProfile();
+      },()=>{});
+    }
+    renderClips();
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

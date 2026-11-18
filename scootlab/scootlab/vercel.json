@@ -1,0 +1,5 @@
+{
+  "buildCommand": "node personalizar.mjs",
+  "outputDirectory": ".",
+  "cleanUrls": true
+}
