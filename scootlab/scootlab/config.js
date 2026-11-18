@@ -2,7 +2,7 @@
 window.APP_CONFIG = {
   // Supabase → Project Settings → API (la clave anon es pública por diseño)
   SUPABASE_URL: "https://qwgzwrulghicxwnyhsra.supabase.co",
-  SUPABASE_ANON_KEY: "https://qwgzwrulghicxwnyhsra.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_RxACx-VfjaVp0zMlHw1GKw__UtxeRSY",
   // Tu dominio, sin barra final. Ej: "https://scootlab.com"
   SITE_URL: "https://scooterlab.vercel.app/app",
   // Datos que aparecerán en Privacidad, Términos, Contacto y Acerca de
