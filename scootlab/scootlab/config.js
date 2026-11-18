@@ -6,7 +6,7 @@ window.APP_CONFIG = {
   // Tu dominio, sin barra final. Ej: "https://scootlab.com"
   SITE_URL: "https://scooterlab.vercel.app/app",
   // Datos que aparecerán en Privacidad, Términos, Contacto y Acerca de
-  OWNER_NAME: "TU NOMBRE",
+  OWNER_NAME: "alejandro",
   CONTACT_EMAIL: "75alejandrovc@gmail.com",
   // Cuando AdSense te dé tu ID. Ej: "ca-pub-1234567890123456". Déjalo vacío hasta entonces.
   ADSENSE_CLIENT: "
