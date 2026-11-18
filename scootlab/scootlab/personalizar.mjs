@@ -39,3 +39,4 @@ fs.writeFileSync("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitema
 if (client) fs.writeFileSync("ads.txt", `google.com, ${client.replace("ca-", "")}, DIRECT, f08c47fec0942fa0\n`);
 if (/TU-DOMINIO|TU NOMBRE|tu@email/.test(JSON.stringify(cfg))) console.warn("AVISO: config.js aún tiene datos de ejemplo.");
 console.log(`Listo: ${files.length} páginas, anuncios ${client ? "activados" : "desactivados"}.`);
+}
